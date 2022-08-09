@@ -1,0 +1,32 @@
+.previewButton ,.dropdownDownloadButton{
+    margin: 10px;
+    height: 40px;
+    border-radius: 20px;
+    font-size: 17px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: bold;
+    display: flex;
+}
+.previewButton:hover {
+    color: darkgray;
+    border: none;
+    background-color: grey;
+    
+}
+
+.buttons {
+    display: flex;
+    position: relative;
+    top: 20px;
+    margin: auto;
+    width: 311px;
+}
+
+.detailsText {
+    font-size: 20px;
+}
+
+.detailsImage {
+    width: 200px;
+    border-radius: 20px;
+}

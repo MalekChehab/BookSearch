@@ -1,0 +1,33 @@
+.searchBar {
+    position: relative;
+    margin: 10px;
+    height: 45px;
+    width: 250px;
+    border: none;
+    border-radius: 20px;
+    font-size: 18px;
+    text-indent: 15px;
+    z-index: 1;
+    margin-bottom: 70px;
+}
+
+.searchBar:focus {
+    outline: none;
+}
+
+.submitButton {
+    border-radius: 20px;
+    height: 45px;
+    color: white;
+    border: none;
+    background-color: #3c87df;
+    position: sticky;
+    z-index: 1;
+}
+
+.errorText {
+    position: relative;
+    color: darkred;
+    font-weight: bold;
+    font-size: 18px;
+}
