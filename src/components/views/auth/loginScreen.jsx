@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-// import jwt_decode from 'jwt-decode';
 import './loginScreen.css';
 import reading from '../../../assets/reading.png';
 

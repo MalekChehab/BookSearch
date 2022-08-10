@@ -13,25 +13,19 @@
 }
 
 .header {
-    /* display: block; */
-    /* overflow: hidden; */
     padding: 20px 10px;
-    /* position: ; */
 }
 
 .svg-container {
     position: fixed;
-    /* position: absolute; */
     top: 0;
     right: 0;
     left: 0;
-    /* z-index: 0; */
 }
 
 .path2 {
     width: 50px;
     fill: #ff517f;
-    /* z-index: -1; */
 }
 .svg {
     overflow: hidden;

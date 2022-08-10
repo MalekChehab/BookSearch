@@ -1,4 +1,4 @@
-import React, {useState, CSSProperties} from 'react';
+import React, {useState} from 'react';
 import axios from 'axios';
 import BookSearchForm from '../../bookSearchForm';
 import BooksList from '../../booksList';
@@ -8,6 +8,7 @@ import {Button} from 'react-bootstrap';
 import './searchScreen.css';
 import {IconLogout} from '@tabler/icons';
 import {useNavigate} from 'react-router-dom';
+import ErrorBoundary from '../../errorBoundary';
 
 const SearchScreen = () => {
     const [searchTerm, setSearchTerm] = useState('');
@@ -17,10 +18,17 @@ const SearchScreen = () => {
 
     let navigate = useNavigate();
 
+    const handleLogout = () => {
+        navigate('/', {isLoggedIn: false});
+    }
+
     let API_URL = 'https://www.googleapis.com/books/v1/volumes';
 
     const onInputChange = e => {
         setSearchTerm(e.target.value);
+        
+        // for search as you type feature
+        fetchBooks();
     };
 
     const onSubmit = e => {
@@ -30,7 +38,6 @@ const SearchScreen = () => {
 
     const fetchBooks = async () => {
         setLoading(true);
-        console.log(loading);
         setError(false);
         
         try{    
@@ -46,15 +53,9 @@ const SearchScreen = () => {
             }
         } catch(error){
             setError(true);
-
         }
         setLoading(false);
-        console.log(loading);
     };
-
-    const handleLogout = () => {
-        navigate('/', {isLoggedIn: false});
-    }
 
     return (
         <>
@@ -75,7 +76,9 @@ const SearchScreen = () => {
                 size={60}
                 margin={2}
             />
-            <BooksList books={books} />
+            <ErrorBoundary key={searchTerm}>
+                <BooksList books={books} />
+            </ErrorBoundary>
         </>
     );
 

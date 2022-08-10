@@ -2,7 +2,7 @@ import React from 'react';
 
 const BookAuthors = (authors) => {
     if (!authors) return '';
-    if (authors.length <= 2) {
+    else if (authors.length <= 2) {
         authors = authors.join(' and ');
     }
     else if (authors.length > 2) {

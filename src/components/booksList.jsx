@@ -23,7 +23,7 @@ const BookItem = ({book}) => {
                         <p>{book.volumeInfo.publisher != null ? (`${book.volumeInfo.publisher}`) : ''}</p>                          {/*publisher*/}
                         <div>{book.volumeInfo.averageRating != null ? 
                         <StarRatings
-                            className='ratings'                                                                                                //rating
+                            className='ratings'                                                                                      //rating
                             rating={book.volumeInfo.averageRating}
                             starRatedColor='#ffb65a'
                             starEmptyColor='grey'
