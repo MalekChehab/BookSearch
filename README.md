@@ -30,8 +30,8 @@ Search Screen
 
 ## Specifications <a name = "specs"></a>
 
-- Login with Google using oauth 2.0
-- Search for books using Google books api
+- Login with Google using OAuth 2.0
+- Search for books using Google Books API
 - Search by entering the name of the author
 - Filter to display downloadable books
 - Filter books by newest
