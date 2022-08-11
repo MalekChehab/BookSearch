@@ -15,7 +15,7 @@
 + [Built Using](#built_using)
 
 ## About <a name = "about"></a>
-A web application for searching for books by their author
+A web application in React for books searching by the author
 
 ## Demo <a name = "demo"></a>
 
@@ -32,7 +32,9 @@ Search Screen
 
 - Login with Google using oauth 2.0
 - Search for books using Google books api
+- Search by entering the name of the author
 - Filter to display downloadable books
+- Filter books by newest
 - Search as you type searchBar
 - Display the book's details
 - Preview book
