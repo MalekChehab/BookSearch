@@ -1,9 +1,9 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import './App.css';
 import SearchScreen from './components/views/home/searchScreen';
 import BookDetailScreen from './components/views/home/bookDetailScreen';
 import LoginScreen from './components/views/auth/loginScreen';
-import {BrowserRouter as Router, Route, Routes, useNavigate} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 
 const NoMatchRoute = () => <div>404 Page doesn't exist</div>;
 

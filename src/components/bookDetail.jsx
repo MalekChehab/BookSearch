@@ -1,14 +1,8 @@
 import React, {useEffect} from 'react';
 import BookAuthors from './bookAuthors';
-import { DropDownButtonComponent } from '@syncfusion/ej2-react-splitbuttons';
-import { enableRipple } from '@syncfusion/ej2-base';
 import './bookDetail.css';
-import { IconBookDownload, IconBook } from "@tabler/icons";
-import { registerLicense } from '@syncfusion/ej2-base';
-
-registerLicense('ORg4AjUWIQA/Gnt2VVhiQlFaclxJVHxBYVF2R2FJflR0fV9FZ0wxOX1dQl9hSXZTf0RnXHhednxVQWY=');
-
-enableRipple(true);
+import { IconBook } from "@tabler/icons";
+import DropDownButton from './dropDownButton';
 
 const BookDetail = ({book}) => {
 
@@ -46,30 +40,25 @@ const BookDetail = ({book}) => {
                             e.preventDefault();
                             window.open(`${book.accessInfo.webReaderLink}`)
                         }}>
-                            <IconBook style={{marginRight: 5}}/> Preview
+                            <IconBook style={{marginRight:5}}/> Preview
                     </button>
 
-                    <DropDownButtonComponent
-                        className='dropdownDownloadButton'
-                        cssClass='e-caret-hide'
-                        items={
-                            [
-                                {
-                                    iconCss: 'e-icons e-file',
-                                    text: 'EPUB',
-                                    url: `${book.accessInfo.epub.downloadLink}`,
-                                    disabled: book.accessInfo.epub.isAvailable ? false : true,
-                                }, 
-                                {
-                                    iconCss: 'e-icons e-export-pdf-2',
-                                    text: 'PDF',
-                                    url: `${book.accessInfo.pdf.downloadLink}`,
-                                    disabled: book.accessInfo.pdf.isAvailable ? false : true,
-                                },
-                            ]
-                        } > 
-                        <IconBookDownload style={{marginRight: 5}}/> Download
-                    </DropDownButtonComponent>  
+                    <DropDownButton name='Download'>
+                        <li>
+                            <a className='downloadOptions' 
+                            href={book.accessInfo.epub.downloadLink} 
+                            target="_blank">
+                                EPUB
+                            </a>
+                        </li>
+                        <li>
+                            <a className='downloadOptions' 
+                            href={book.accessInfo.pdf.downloadLink} 
+                            target="_blank">
+                                PDF
+                            </a>
+                        </li>
+                    </DropDownButton>
                 </div>
             </div>
         </section>
