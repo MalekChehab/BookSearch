@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import BookSearchForm from '../../bookSearchForm';
 import BooksList from '../../booksList';
@@ -15,6 +15,30 @@ const SearchScreen = () => {
     const [books, setBooks] = useState({items: []});
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [startIndex, setStartIndex] = useState(0);
+    const maxResults = 40;
+    const [isThereMoreBooks, setIsThereMoreBooks] = useState(false);
+    const [isThereLessBooks, setIsThereLessBooks] = useState(false);
+
+    useEffect(() => {
+        console.log('books:', books);
+
+        if(startIndex+maxResults<books.totalItems){
+            setIsThereMoreBooks(true);
+        }else{
+            setIsThereMoreBooks(false);
+        }
+        if(startIndex > 0){
+            setIsThereLessBooks(true);
+        }else{
+            setIsThereLessBooks(false);
+        }
+    }, [books]);
+
+    useEffect(() => {
+        console.log('startIndex:', startIndex);
+    }, [startIndex]);
+
 
     let navigate = useNavigate();
 
@@ -25,13 +49,14 @@ const SearchScreen = () => {
     let API_URL = 'https://www.googleapis.com/books/v1/volumes';
 
     const onInputChange = e => {
+        setStartIndex(0);
         setSearchTerm(e.target.value);
-        
         // for search as you type feature
         fetchBooks();
     };
 
     const onSubmit = e => {
+        setStartIndex(0);
         e.preventDefault();
         fetchBooks();
     }
@@ -39,13 +64,10 @@ const SearchScreen = () => {
     const fetchBooks = async () => {
         setLoading(true);
         setError(false);
-        
-        try{    
-            //inauthor is for searching for author
-            //filter to only show downloadable free ebooks
-            //increase the number of results to 40 which is maximum
-            //order by the newest book
-            const result = await axios.get(`${API_URL}?q=inauthor:${searchTerm}&filter=free-ebooks&download=download-undefined&maxResults=40&orderBy=newest`);
+        try{
+            const result = await axios.get(
+                `${API_URL}?q=inauthor:${searchTerm}&filter=free-ebooks&download=download-undefined&maxResults=${maxResults}&startIndex=${startIndex}&orderBy=newest`
+                );
             if(result.data != null){
                 setBooks(result.data);
             }else{
@@ -57,6 +79,39 @@ const SearchScreen = () => {
         setLoading(false);
     };
 
+    const nextBooks = async() => {
+        setStartIndex(startIndex+maxResults);
+        try{ 
+            console.log(`index is: ${startIndex}`);
+            const result = await axios.get(
+                `${API_URL}?q=inauthor:${searchTerm}&filter=free-ebooks&download=download-undefined&maxResults=${maxResults}&startIndex=${startIndex}&orderBy=newest`
+                );
+            if(result.data != null){
+                setBooks(result.data);
+            }else{
+                console.log('no result found');
+            }
+        } catch(error){
+            setError(true);
+        }
+    }
+
+    const previousBooks = async() => {
+        setStartIndex(startIndex-maxResults);
+        try{
+            const result = await axios.get(
+                `${API_URL}?q=inauthor:${searchTerm}&filter=free-ebooks&download=download-undefined&maxResults=${maxResults}&startIndex=${startIndex}&orderBy=newest`
+                );
+            if(result.data != null){
+                setBooks(result.data);
+            }else{
+                console.log('no result found');
+            }
+        } catch(error){
+            setError(true);
+        }
+    }
+        
     return (
         <>
             <Header headerText={'Book Search'} />
@@ -79,6 +134,8 @@ const SearchScreen = () => {
             <ErrorBoundary key={searchTerm}>
                 <BooksList books={books} />
             </ErrorBoundary>
+            {isThereLessBooks && startIndex>0 && <Button className='previousButton' onClick={previousBooks}>Previous</Button>}    
+            {isThereMoreBooks && startIndex!=books.items.length-1 && <Button className='nextButton' onClick={nextBooks}>Next</Button>}
         </>
     );
 

@@ -40,11 +40,11 @@ const BookItem = ({book}) => {
 
 const BooksList = ({books}) => {
     return (
-        <ul className='grid'>
-            {books.items.map((book, index) => {
-                return <BookItem className='bookItem' book={book} key={index} />;
-            })}
-        </ul>
+            <ul className='grid'>
+                {books.items.map((book, index) => {
+                    return <BookItem className='bookItem' book={book} key={index} />;
+                })}
+            </ul>
     );
 };
 

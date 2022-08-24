@@ -19,3 +19,19 @@
     position: relative;
     z-index: 100;
 }
+
+.previousButton{
+    border-radius: 20px;
+    margin: 10px;
+    font-weight: bold;
+    background-color: #162463;
+    color: #c7effd;
+}
+
+.nextButton{
+    border-radius: 20px;
+    margin: 10px;
+    font-weight: bold;
+    background-color: #162463;
+    color: #c7effd;
+}
