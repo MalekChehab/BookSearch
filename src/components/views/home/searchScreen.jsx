@@ -37,8 +37,10 @@ const SearchScreen = () => {
 
     useEffect(() => {
         console.log('startIndex:', startIndex);
+        if(searchTerm != ''){
+            fetchBooks();
+        }
     }, [startIndex]);
-
 
     let navigate = useNavigate();
 
@@ -77,39 +79,27 @@ const SearchScreen = () => {
             setError(true);
         }
         setLoading(false);
+    }
+
+    const goToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+        });
     };
 
     const nextBooks = async() => {
         setStartIndex(startIndex+maxResults);
-        try{ 
-            console.log(`index is: ${startIndex}`);
-            const result = await axios.get(
-                `${API_URL}?q=inauthor:${searchTerm}&filter=free-ebooks&download=download-undefined&maxResults=${maxResults}&startIndex=${startIndex}&orderBy=newest`
-                );
-            if(result.data != null){
-                setBooks(result.data);
-            }else{
-                console.log('no result found');
-            }
-        } catch(error){
-            setError(true);
-        }
+        fetchBooks();
+        console.log('index: '+ startIndex);
+        goToTop();
+        console.log(books.items[0].volumeInfo.title);
     }
 
     const previousBooks = async() => {
         setStartIndex(startIndex-maxResults);
-        try{
-            const result = await axios.get(
-                `${API_URL}?q=inauthor:${searchTerm}&filter=free-ebooks&download=download-undefined&maxResults=${maxResults}&startIndex=${startIndex}&orderBy=newest`
-                );
-            if(result.data != null){
-                setBooks(result.data);
-            }else{
-                console.log('no result found');
-            }
-        } catch(error){
-            setError(true);
-        }
+        fetchBooks();
+        goToTop();
     }
         
     return (
@@ -134,8 +124,8 @@ const SearchScreen = () => {
             <ErrorBoundary key={searchTerm}>
                 <BooksList books={books} />
             </ErrorBoundary>
-            {isThereLessBooks && startIndex>0 && <Button className='previousButton' onClick={previousBooks}>Previous</Button>}    
-            {isThereMoreBooks && startIndex!=books.items.length-1 && <Button className='nextButton' onClick={nextBooks}>Next</Button>}
+            {isThereLessBooks && <Button className='previousButton' onClick={previousBooks}>Previous</Button>}    
+            {isThereMoreBooks && <Button className='nextButton' onClick={nextBooks}>Next</Button>}
         </>
     );
 
